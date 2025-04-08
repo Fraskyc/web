@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: rgb(0, 0, 0);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(-1);
+    display: flex;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.nav a:hover {
+    transform: scaleX(-1) scale(1.2);
+    color: #ff00ff;
+}
+
+.content, .contact-content, .gallery {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 30px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    z-index: 10;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.light-button {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ff00ff;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ff00ff;
+    transition: box-shadow 0.3s;
+    z-index: 10;
+}
+
+.light-button:hover {
+    box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+}
+
+/* Další styly pro kontakt, galerii atd... */

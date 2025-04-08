@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zrcadlový svět</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .background {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            background: url('mirror_background.jpg') no-repeat center center;
+            background-size: cover;
+            transition: transform 0.2s ease-out;
+        }
+
+        .nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(-1);
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .nav a:hover {
+            transform: scaleX(-1) scale(1.2);
+            color: #ff00ff;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 30px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .light-button {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff00ff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff00ff;
+            transition: box-shadow 0.3s;
+            z-index: 10;
+        }
+
+        .light-button:hover {
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+        }
+
+        .flash {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Nové styly pro Kontakt */
+        .contact-content {
+            text-align: center;
+        }
+
+        .mirror-portal {
+            width: 300px;
+            height: 400px;
+            background: url('/mnt/data/A_digital_photograph_features_an_oval-shaped_mirro.png') no-repeat center center;
+            background-size: contain; /* Zajistí, že obrázek bude celkově zobrazen */
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            margin-bottom: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        
+        .mirror-portal img {
+            max-width: 100%;  /* Zajistí, že obrázek nebude překračovat šířku kontejneru */
+            max-height: 100%; /* Zajistí, že obrázek nebude překračovat výšku kontejneru */
+            object-fit: contain; /* Zajistí, že obrázek bude zachován ve správných proporcích */
+        }
+        
+        
+
+        .mirror-portal:hover {
+            transform: scale(1.05);
+        }
+
+        .advice {
+            font-style: italic;
+            color: #ff00ff;
+        }
+
+        .gallery {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .image-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            width: 250px;
+            backdrop-filter: blur(3px);
+            transition: transform 0.3s;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 1s ease-in-out, filter 1s, rotate 1s;
+        }
+
+        .image-box p {
+            margin: 10px 0;
+        }
+
+        .image-box button {
+            background: #ff00ff;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .image-box button:hover {
+            background: #ff66ff;
+        }
+
+        /* Iluze - různé animace */
+        @keyframes illusionWave {
+            0%, 100% { transform: scale(1.05) rotate(1deg); }
+            25% { transform: scale(1.1) rotate(-1deg); }
+            50% { transform: scale(1.05) rotate(1deg); }
+            75% { transform: scale(1.1) rotate(-1deg); }
+        }
+
+        @keyframes illusionMirror {
+            0%, 100% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.5) hue-rotate(180deg); }
+        }
+
+        @keyframes illusionSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .echo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+    
+        .echo-input {
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            color: white;
+            background: rgba(255, 0, 255, 0.2);
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            text-align: center;
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+    
+        .echo-input:focus {
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+        }
+    
+        .echo-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(45deg, #ff00ff, #9900cc);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+        }
+    
+        .echo-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 1);
+        }
+    
+        .echo-output {
+            font-size: 22px;
+            color: #ff00ff;
+            margin-top: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #ff00ff;
+            width: 0;
+            animation: typing 2s steps(30, end) forwards;
+        }
+    
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background" id="background"></div>
+    <div class="flash" id="flash"></div>
+    <div class="nav">
+        <a href="#" onclick="showSection('home')">Domů</a>
+        <a href="#" onclick="showSection('gallery')">Galerie</a>
+        <a href="#" onclick="window.location.href='gallery.html'">Kontakt</a>
+        <a href="#" onclick="showSection('echo')">Echo zpráv</a>
+    </div>
+    <div id="content" class="content">
+        Vítejte v zrcadlovém světě
+    </div>
+    <div id="light-button-container">
+        <button class="light-button" onclick="triggerFlash()">Magické světlo</button>
+    </div>
+
+    <audio id="illusion-sound" src="illusion-sound.mp3" preload="auto"></audio>
+
+    <script>
+        // Pole s radami
+        const adviceList = [
+            "Jste připraveni na skutečnou pravdu, nebo jen na iluze?",
+            "Ne všechno, co se zrcadlí, je skutečné.",
+            "Podívej se do zrcadla a najdi svou skutečnou podstatu.",
+            "Iluze jsou kouzlem, které nás drží ve světě fantazie.",
+            "Někdy je lepší vidět věci, jak jsou, než jak si je představujeme."
+        ];
+
+        function stopIllusions() {
+            const images = document.querySelectorAll('.image-box img');
+            images.forEach(image => {
+                image.style.animation = ''; // Zastavení animace
+            });
+            const imageBoxes = document.querySelectorAll('.image-box');
+            imageBoxes.forEach(box => {
+                box.style.border = ''; // Odstranění efektu kolem obrázků
+            });
+        }
+    
+        // Funkce pro změnu sekce (smazání iluzí při přechodu na jinou sekci)
+        function showSection(section) {
+            let content = document.getElementById('content');
+            let buttonContainer = document.getElementById('light-button-container');
+            
+            content.style.opacity = '0';
+            setTimeout(() => {
+                if (section === 'home') {
+                    content.innerHTML = 'Vítejte v zrcadlovém světě';
+                    buttonContainer.style.display = 'block'; // Tlačítko se zobrazí pouze na home stránce
+                } else if (section === 'gallery') {
+                    content.innerHTML = `
+                    <div class="gallery">
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2019/12/1.alchymista-4ku3-768x576.jpg" alt="Iluzorní obraz" data-illusion="illusionWave">
+                            <p>Vlnivá realita</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2020/09/61.jpg" alt="Zrcadlo v prostoru" data-illusion="illusionMirror">
+                            <p>Zrcadlová smyčka</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2019/12/8.ames-4ku3.jpg" alt="Točící se prostor" data-illusion="illusionSpin">
+                            <p>Nekonečné otáčení</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                    </div>`;
+                    buttonContainer.style.display = 'none'; // Tlačítko se skryje na stránce galerie
+                } else if (section === 'echo') {
+                    content.innerHTML = `
+                    <div class="echo-container">
+                        <input class="echo-input" type="text" id="user-message" placeholder="Napiš zprávu...">
+                        <button class="echo-button" onclick="showEchoMessage()">Zobrazit Echo</button>
+            
+                        <div id="echo-output" class="echo-output"></div>
+                    </div>`;
+                    buttonContainer.style.display = 'none'; // Tlačítko se skryje na stránce echo
+                }
+                content.style.opacity = '1';
+            }, 500);
+            }
+            // Zastavení všech animací při přechodu mezi sekcemi
+            stopIllusions();
+        
+
+        // Funkce pro změnu rady při kliknutí
+        function changeAdvice() {
+            const randomIndex = Math.floor(Math.random() * adviceList.length);
+            const adviceElement = document.getElementById('advice');
+            adviceElement.innerHTML = `<h3>Rada z jiného světa:</h3><p>${adviceList[randomIndex]}</p>`;
+        }
+
+        function triggerFlash() {
+            let flash = document.getElementById('flash');
+            flash.style.animation = 'flashEffect 0.5s ease-out';
+            flash.style.opacity = '1';
+            setTimeout(() => {
+                flash.style.animation = '1';
+                flash.style.opacity = '0';
+            }, 300);
+        }
+        function showEchoMessage() {
+            // Získání textu ze vstupního pole
+            const userMessage = document.getElementById('user-message').value;
+        
+            // Pokud je zpráva prázdná, neprováděj nic
+            if (!userMessage.trim()) {
+                return;
+            }
+        
+            // Obrácení textu
+            const reversedMessage = userMessage.split('').reverse().join('');
+        
+            // Zobrazení obrácené zprávy ve výstupu
+            const echoOutput = document.getElementById('echo-output');
+            echoOutput.innerHTML = `Echo zpráva: ${reversedMessage}`;
+        
+            // Vymazání vstupního pole po zobrazení
+            document.getElementById('user-message').value = '';
+        }
+        
+        
+
+        document.addEventListener('mousemove', (e) => {
+            let background = document.getElementById('background');
+            let moveX = (e.clientX / window.innerWidth - 0.5) * 20;
+            let moveY = (e.clientY / window.innerHeight - 0.5) * 20;
+            background.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    </script>
+</body>
+</html>

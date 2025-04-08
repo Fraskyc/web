@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zrcadlový svět - Kontakt</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(-1);
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .nav a:hover {
+            transform: scaleX(-1) scale(1.2);
+            color: #ff00ff;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .mirror-portal {
+            width: 250px;
+            height: 350px;
+            background: url('mirror-portal.jpg') no-repeat center center;
+            background-size: cover;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+        }
+
+        .mirror-portal:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
+        }
+
+        .advice {
+            font-style: italic;
+            color: #ff00ff;
+            padding: 15px;
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            max-width: 300px;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+        .background {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            background: url('mirror_background.jpg') no-repeat center center;
+            background-size: cover;
+            transition: transform 0.2s ease-out;
+            }
+    </style>
+</head>
+<body><div class="background" id="background">
+ 
+    <div class="nav">
+        <a href="zk.html" onclick="showSection('home')">Domů</a>
+        <a href="zk.html" onclick="showSection('gallery')">Galerie</a>
+        <a href="gallery.html">Kontakt</a>
+        <a href="zk.html" onclick="showSection('echo')">Echo zpráv</a>
+    </div>
+
+    <div class="contact-content">
+        <h2>Zrcadlový portál</h2>
+        <div class="mirror-portal" onclick="changeAdvice()"></div>
+        <div class="advice" id="advice">
+            <h3>Rada z jiného světa:</h3>
+            <p>Jste připraveni na skutečnou pravdu, nebo jen na iluze?</p>
+        </div>
+    </div>
+
+    <script>
+        const adviceList = [
+            "Jste připraveni na skutečnou pravdu, nebo jen na iluze?",
+            "Ne všechno, co se zrcadlí, je skutečné.",
+            "Podívej se do zrcadla a najdi svou skutečnou podstatu.",
+            "Iluze jsou kouzlem, které nás drží ve světě fantazie.",
+            "Někdy je lepší vidět věci, jak jsou, než jak si je představujeme."
+        ];
+
+        function changeAdvice() {
+            const randomIndex = Math.floor(Math.random() * adviceList.length);
+            document.getElementById('advice').innerHTML = `<h3>Rada z jiného světa:</h3><p>${adviceList[randomIndex]}</p>`;
+        }
+    </script>
+    
+</body>
+</html>
