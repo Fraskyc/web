@@ -11,12 +11,11 @@
             background: black;
             color: white;
             font-family: Arial, sans-serif;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             position: relative;
         }
 
@@ -55,15 +54,13 @@
         }
 
         .content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+           
             text-align: center;
             font-size: 30px;
             opacity: 0;
             animation: fadeIn 1s forwards;
             z-index: 10;
+            padding: 100px 20px 50px 20px;
         }
 
         @keyframes fadeIn {
@@ -271,7 +268,7 @@
     <div class="nav">
         <a href="#" onclick="showSection('home')">Domů</a>
         <a href="#" onclick="showSection('gallery')">Galerie</a>
-        <a href="#" onclick="window.location.href='gallery.html'">Kontakt</a>
+        <a href="#" onclick="window.location.href='gallery.html'">Magické zrcadlo</a>
         <a href="#" onclick="showSection('echo')">Echo zpráv</a>
     </div>
     <div id="content" class="content">
@@ -330,6 +327,31 @@
                         <div class="image-box">
                             <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2019/12/8.ames-4ku3.jpg" alt="Točící se prostor" data-illusion="illusionSpin">
                             <p>Nekonečné otáčení</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2019/12/1.alchymista-4ku3-768x576.jpg" alt="Iluzorní obraz" data-illusion="illusionWave">
+                            <p>Vlnivá realita</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2020/09/61.jpg" alt="Zrcadlo v prostoru" data-illusion="illusionMirror">
+                            <p>Zrcadlová smyčka</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2019/12/8.ames-4ku3.jpg" alt="Točící se prostor" data-illusion="illusionSpin">
+                            <p>Nekonečné otáčení</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2019/12/1.alchymista-4ku3-768x576.jpg" alt="Iluzorní obraz" data-illusion="illusionWave">
+                            <p>Vlnivá realita</p>
+                            <button onclick="triggerIllusion(this)">Iluze</button>
+                        </div>
+                        <div class="image-box">
+                            <img src="https://muzeumfantastickychiluzi.cz/wp-content/uploads/2020/09/61.jpg" alt="Zrcadlo v prostoru" data-illusion="illusionMirror">
+                            <p>Zrcadlová smyčka</p>
                             <button onclick="triggerIllusion(this)">Iluze</button>
                         </div>
                     </div>`;
@@ -395,6 +417,18 @@
             let moveY = (e.clientY / window.innerHeight - 0.5) * 20;
             background.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
+        function triggerIllusion(button) {
+            const image = button.parentElement.querySelector('img');
+            const illusionType = image.dataset.illusion;
+        
+            // Nejprve zruš předchozí animaci, aby šla znovu spustit
+            image.style.animation = 'none';
+            void image.offsetWidth; // Resetuje animaci
+        
+            // Nastav vybranou animaci
+            image.style.animation = `${illusionType} 2s ease-in-out`;
+        }
+        
     </script>
 </body>
 </html>
